@@ -58,3 +58,32 @@ Build RF model:
  d) Evaluation: the auc-roc score of the baseline model is 0.445. Since the data label is imbalanced, this is a score like a random guess.
  
 Time efficiency: 3.27 hours on CPU cluster, 2 workers.
+
+## Machine Learning Goals, Outcomes, and Execution Time Efficiency
+### 1. Building a time series model to predict SPX index with Reddit users sentiment
+#### Sentiment Analysis
+Goal:
+
+Build a time series based model to predict SPX index using reddit user’s sentiment from
+the text.
+
+Data Processing Steps:
+
+1. Text aggregation: Concatenate the reddit submission and comments text at the daily level for analysis
+2. Pre-processing: Pre-processed the data to remove blanks, spaces, stop words, symbols, links etc.
+3. Text tokenization - tokenized the text using BertTokenizer API
+4. Sentiment Analysis from finance perspective: Utilized transfer learning from BERT model
+i.e. finbert to get daily sentiments. finbert is a transformer model specifically trained on financial data to predict the sentiment of financial text. It provides sentiments as three labels ie. Positive, Negative and Neutral.
+
+Time Efficiency: To predict the sentiment, it takes 15 min to run on a GPU with 3 workers.
+#### Multivariate Time-Series Model
+Trained a multivariate time series model to predict the SPX index based on the user sentiments.
+1. Data Processing: created a Prophet model object and added the regressor to the model.
+2. Model Parameters: As per time series data, model parameters were added like daily
+seasonality, holidays, changepoint range tec
+3. Fit the Prophet model on our data with 3 sentiment labels, date and y variable(SPX price).
+4. Prediction: Predict the next 15 days SPX price to evaluate our model.
+5. Performance: Model has mean absolute error on the lower side i.e. 46.2%. It can be
+increased using cross validation to fine tune our model.
+#### Conclusion:
+User sentiment plays an important role in predicting the performance of market and stocks but sentiment alone is not enough to predict the close SPX index. If it can be merged with other market indicators, it can be useful in stock market prediction or SPX index prediction.
