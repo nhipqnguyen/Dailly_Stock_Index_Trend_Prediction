@@ -128,4 +128,4 @@ Using the number of times the “Swing Trade” words are seen in Reddit, we try
 #### Analysis and Visualization:
 We segmentized the graph into 4 parts, where the first part shows relatively smaller fluctuation in price difference(orange line) as the “Swing Trade” words are used less. Going towards the end of 2018, more occurrences of the “Swing Trade” words are seen, during which we can observe from the graph that the fluctuation of the prices are also relatively larger. Lastly, we see a dip in the word usage and the fluctuation in price difference went down and then both went up as well.
 
-![alt text](https://github.com/nhipqnguyen/Dailly_Stock_Index_Trend_Prediction/edit/main/images/swing_trade_terms.png)
+![alt text](https://github.com/nhipqnguyen/Dailly_Stock_Index_Trend_Prediction/edit/main/swing_trade_terms.png)
