@@ -116,3 +116,16 @@ The random forest model spent 6.8 minutes on fitting without parameter tuning on
 - We then used the trained model to predict the validation data set, which resulted in an area under the ROC curve of 0.51. This was higher than the result obtained from fitting our initial random forest model. It was still not a good result; however, for this type of data which was heavily driven by human behaviors, we did not expect high performance metrics for our first try.
 - We concluded that words that are related to interest rate hike and rate cut could be useful in predicting the next day's stock index trend. This was not surprising since traders’ decisions to buy, hold, or sell could be affected by the information they were exposed to on Reddit.
 - Our logistic regression model took 1.63 seconds to train on 1,439 training data points and 1.38 minutes to predict 382 validation data points on CPU cluster, 2 workers.
+
+### 4. Analysis and Visualization of Magnitude Change in Stock Prices with Respect to the Number of Times “Swing Trade” words is Used.
+(*Swing trading: when traders trade according to the momentum and take profit within a short timeframe.)
+#### Goal
+Using the number of times the “Swing Trade” words are seen in Reddit, we try to see if there is a correlation where the more time these words appear in Reddit, the fluctuation in the stock price within the next 24 hours has a bigger magnitude change.
+#### Data preparation
+- Form a word count column “sum_swing_trade_terms” that sums up the number of occurrences of the words in the checklist.
+- Sum the number of keywords appearances: define a udf to sum the counts of the defined keywords lists.
+- Form a price difference column by calculating the price difference between the date and its next day.
+#### Analysis and Visualization:
+We segmentized the graph into 4 parts, where the first part shows relatively smaller fluctuation in price difference(orange line) as the “Swing Trade” words are used less. Going towards the end of 2018, more occurrences of the “Swing Trade” words are seen, during which we can observe from the graph that the fluctuation of the prices are also relatively larger. Lastly, we see a dip in the word usage and the fluctuation in price difference went down and then both went up as well.
+
+![alt text](https://github.com/nhipqnguyen/Dailly_Stock_Index_Trend_Prediction/edit/main/images/swing_trade_terms.png)
