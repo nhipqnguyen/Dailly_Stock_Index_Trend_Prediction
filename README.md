@@ -103,3 +103,16 @@ User sentiment plays an important role in predicting the performance of market a
 - Performance of the random forest model with only these two word counts surpasses the baseline model by 0.06, meaning these two features are useful for index change prediction.
 #### Time efficiency:
 The random forest model spent 6.8 minutes on fitting without parameter tuning on the CPU cluster, 2 workers.
+
+### 3. Building a logistic regression model to predict the stock index trend
+- We wanted to find out if the words in our “rate hike” and “rate cut”’ were useful in predicting whether the stock index went up or down the next day.
+- After cleaning the combined text and storing words in a list for each day, we created two new features, which were the numbers of times the words in our “rate hike” and “rate cut” lists appeared on Reddit that day. We called these new features rate_hike_word_count and rate_cut_word_count.
+- We assembled these two features into a vector and performed min-max scaling, then split the data into training (80%) and validation (20%) sets.
+- We fit a logistic regression model to the training data using the following parameters:
+      - Regularization parameter: 0.01
+      - Maximum iteration: 1000
+      - Threshold: 0.55
+      - Fit intercept: True
+- We then used the trained model to predict the validation data set, which resulted in an area under the ROC curve of 0.51. This was higher than the result obtained from fitting our initial random forest model. It was still not a good result; however, for this type of data which was heavily driven by human behaviors, we did not expect high performance metrics for our first try.
+- We concluded that words that are related to interest rate hike and rate cut could be useful in predicting the next day's stock index trend. This was not surprising since traders’ decisions to buy, hold, or sell could be affected by the information they were exposed to on Reddit.
+- Our logistic regression model took 1.63 seconds to train on 1,439 training data points and 1.38 minutes to predict 382 validation data points on CPU cluster, 2 workers.
