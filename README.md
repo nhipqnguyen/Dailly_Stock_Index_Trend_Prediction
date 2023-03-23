@@ -63,8 +63,7 @@ Time efficiency: 3.27 hours on CPU cluster, 2 workers.
 ### 1. Building a time series model to predict SPX index with Reddit users sentiment
 #### Sentiment Analysis
 Goal:
-
-Build a time series based model to predict SPX index using reddit user’s sentiment from
+- Build a time series based model to predict SPX index using reddit user’s sentiment from
 the text.
 
 Data Processing Steps:
@@ -78,12 +77,29 @@ i.e. finbert to get daily sentiments. finbert is a transformer model specificall
 Time Efficiency: To predict the sentiment, it takes 15 min to run on a GPU with 3 workers.
 #### Multivariate Time-Series Model
 Trained a multivariate time series model to predict the SPX index based on the user sentiments.
-1. Data Processing: created a Prophet model object and added the regressor to the model.
-2. Model Parameters: As per time series data, model parameters were added like daily
+- Data Processing: created a Prophet model object and added the regressor to the model.
+- Model Parameters: As per time series data, model parameters were added like daily
 seasonality, holidays, changepoint range tec
-3. Fit the Prophet model on our data with 3 sentiment labels, date and y variable(SPX price).
-4. Prediction: Predict the next 15 days SPX price to evaluate our model.
-5. Performance: Model has mean absolute error on the lower side i.e. 46.2%. It can be
+- Fit the Prophet model on our data with 3 sentiment labels, date and y variable(SPX price).
+- Prediction: Predict the next 15 days SPX price to evaluate our model.
+- Performance: Model has mean absolute error on the lower side i.e. 46.2%. It can be
 increased using cross validation to fine tune our model.
 #### Conclusion:
 User sentiment plays an important role in predicting the performance of market and stocks but sentiment alone is not enough to predict the close SPX index. If it can be merged with other market indicators, it can be useful in stock market prediction or SPX index prediction.
+
+### 2. Are encouraging buy words and discouraging sell words useful in predicting whether stock index increases or decreases the next day?
+#### Goals
+- Find whether the out-vote number of buy to sell is correlated to the up-and-downs of the day.
+- Build a prediction model using only the word count of encouraging words and discouraging words.
+#### Data preparation
+- Get the words count column: define a udf to get the words counts. New column is in the format of dictionary
+- Sum the number of keywords appearances: define another udf to sum the counts of the defined keywords lists.
+- Subtract the discouraging words count from the encouraging words counts.
+#### Analysis
+- Calculate the correlation between the index difference and the (encouraging word count - discouraging word count), the correlation is 0.02. It's a very small positive correlation.
+- Build a random forest model and get the auc_roc score. The auc_roc score is 0.50.
+#### Conclusion
+- There is a slight positive correlation between the out-vote number and the index change.
+- Performance of the random forest model with only these two word counts surpasses the baseline model by 0.06, meaning these two features are useful for index change prediction.
+#### Time efficiency:
+The random forest model spent 6.8 minutes on fitting without parameter tuning on the CPU cluster, 2 workers.
